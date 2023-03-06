@@ -17,6 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.test_compose.ui.theme.Test_composeTheme
 
@@ -38,6 +40,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+//@Preview error
+//매개 변수가 있는 함수에는 @Preview 어노테이션으로 미리보기를 할수 없다
 fun Greeting(name: String) {
     Text(
         //<string name="welcome">%s ,Welcome</string> %s자리에 매개변수 name가 들어간다
@@ -46,6 +50,43 @@ fun Greeting(name: String) {
         style = MaterialTheme.typography.subtitle1
     )
 }
+
+
+@Preview
+@Composable
+//이를 해결 하기 위해서 컴포저블(Composable) 함수를 감싼 함수를 만드는 방법이 있다.
+//이 함수는 미리 보기를 가능케 한다는 점 외에는 추가적인 가치를 부여하지 않는다
+fun GreetingWrapper(){
+    Greeting("jetPack Compose")
+}
+ @Composable
+ @Preview
+ //컴포저블 함수에 기본값을 추가 할수 있다
+ fun AltGreeting(name: String = "JetPack Compose"){
+     Text(
+         text = stringResource(id = R.string.hello, name),
+         textAlign = TextAlign.Center,
+         style = MaterialTheme.typography.subtitle1
+     )
+ }
+
+//@PreviewParameter를 사용하면 미리 보기에만 영향을 주면서 컴포저블 함수에 값을 전달할 수 있다.
+//이 기능은 새로운 클래스를 작성해야 한다.
+class HelloProvider: PreviewParameterProvider<String>{
+    override val values: Sequence<String>
+        get() = listOf("PreviewParameterProvider").asSequence()
+}
+@Composable
+@Preview
+fun AltGreeting2(@PreviewParameter(HelloProvider::class)
+                 name: String){
+    Text(
+        text = stringResource(id = R.string.hello, name),
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.subtitle1
+    )
+}
+
 
 @Composable
 fun Welcome(){
