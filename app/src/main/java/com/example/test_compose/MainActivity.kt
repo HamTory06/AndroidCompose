@@ -22,9 +22,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.test_compose.ui.theme.Test_composeTheme
 
+// Composable 함수를 렌더링하려면 Activity는 반드시 ComponentActivity()나 ComponentActivity()를
+// 직접 또는 간접적으로 부모 클래스로 갖는 다른 클래스를 상속 해야한다.
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // setContent 함수가 호출 되면서 화면에 표시된다.
         setContent {
             Test_composeTheme {
                 // A surface container using the 'background' color from the theme
@@ -71,11 +74,13 @@ fun GreetingWrapper(){
  }
 
 //@PreviewParameter를 사용하면 미리 보기에만 영향을 주면서 컴포저블 함수에 값을 전달할 수 있다.
-//이 기능은 새로운 클래스를 작성해야 한다.
+//@PreviewParameter 사용하기 위하여 HelloProvider class를 만들어야한다
 class HelloProvider: PreviewParameterProvider<String>{
     override val values: Sequence<String>
-        get() = listOf("PreviewParameterProvider").asSequence()
+        get() = listOf("HamTory").asSequence()
 }
+
+
 @Composable
 @Preview
 fun AltGreeting2(@PreviewParameter(HelloProvider::class)
@@ -88,6 +93,7 @@ fun AltGreeting2(@PreviewParameter(HelloProvider::class)
 }
 
 
+@Preview(widthDp = 100, heightDp = 100, showBackground = true, backgroundColor = 0xfff)
 @Composable
 fun Welcome(){
     Text(
@@ -149,7 +155,7 @@ fun TextAndButton(name: MutableState<String>,
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true, group = "group-1")
 @Composable
 fun Hello(){
     //name변수와 nameEntered변수를 초기화

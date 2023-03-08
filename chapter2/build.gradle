@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace 'com.example.test_compose'
+    namespace 'com.example.chapter2'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.test_compose"
-        minSdk 33
+        applicationId "com.example.chapter2"
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -33,7 +33,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    //jetpack compose 활성화
     buildFeatures {
         compose true
     }
@@ -44,6 +43,9 @@ android {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+    }
+    viewBinding{
+        enabled = true
     }
 }
 
