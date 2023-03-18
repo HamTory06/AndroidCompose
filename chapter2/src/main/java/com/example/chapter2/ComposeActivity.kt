@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.chapter2.ui.theme.Test_composeTheme
 
 class ComposeActivity : ComponentActivity() {
@@ -24,7 +28,8 @@ class ComposeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Factorial()
+//                    Factorial()
+                    BoxDemo()
                 }
             }
         }
@@ -59,6 +64,7 @@ fun Factorial(){
         Text(
             modifier = Modifier.clickable {
                 expended = true
+                Log.d("상태","클릭")
             },
             text = text,
             style = MaterialTheme.typography.h2
@@ -82,15 +88,15 @@ fun Factorial(){
 @Preview
 @Composable
 fun ButtonDemo() {
-    Button(
-        onClick = {
-            Log.d("상태","클릭")
-        },
-//        enabled = false
-    ) {
-        Text("Click me!")
+    Box{
+            Text(
+                text = "Click me!",
+                modifier = Modifier.clickable {
+                    Log.d("상태","클릭")
+                }
+            )
+        }
     }
-}
 
 fun factorialAsString(n: Int): String{
     var result = 1L
@@ -98,4 +104,25 @@ fun factorialAsString(n: Int): String{
         result *= i
     }
     return "$n! = $result"
+}
+@Composable
+@Preview
+fun BoxDemo(){
+    Box(contentAlignment = Alignment.Center){
+        Box(
+            modifier = Modifier
+                .size(width = 100.dp, height = 100.dp)
+                .background(Color.Green)
+        )
+        Box(
+            modifier = Modifier
+                .size(width = 80.dp, height = 80.dp)
+                .background(Color.Yellow)
+        )
+        Text(
+            text = "Hello",
+            color = Color.Black,
+            modifier = Modifier.align(Alignment.TopStart)
+        )
+    }
 }
